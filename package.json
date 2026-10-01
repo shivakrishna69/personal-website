@@ -1,0 +1,20 @@
+{
+  "name": "aurelia-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A high-end 3D interactive portfolio built with Vite, Tailwind CSS v4 and Three.js.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "tailwindcss": "^4.1.11",
+    "vite": "^7.0.0"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  }
+}

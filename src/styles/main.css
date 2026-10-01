@@ -1,0 +1,712 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   1. DESIGN TOKENS — LIGHT MODE
+   --------------------------------------------------------------------------
+   Single source of truth for the entire visual language.
+   Tailwind v4 auto-generates utilities from these names, so `--color-accent`
+   gives you `text-accent`, `bg-accent`, `border-accent`, and so on.
+
+   LIGHT-MODE NOTES
+   ----------------
+   This is a light design, so every tint is BLACK at low alpha, never white.
+   Two rules keep a light UI from looking flat and cheap:
+
+     • Surfaces get *lighter* as they come forward (ground → surface →
+       raised) — the opposite of a dark theme.
+     • Depth comes from soft shadows, not from borders. Hairlines stay very
+       faint (~8-12% black); anything stronger reads as a wireframe.
+
+   The accents are deliberately darker than typical dark-mode values: a
+   #22d3ee cyan that sings on near-black fails contrast badly on white.
+   ========================================================================== */
+@theme {
+  /* -- Surfaces (light-first: the page ground is the darkest of the three) -- */
+  --color-ground: #f4f5f9;
+  --color-surface: #ffffff;
+  --color-raised: #fbfbfe;
+  --color-hairline: #0d112014;
+
+  /* -- Ink -- */
+  --color-ink: #0d1020;
+  --color-ink-soft: #454b63;
+  --color-ink-muted: #6d7488;
+
+  /* -- Accents, darkened for legibility on light surfaces. -- */
+  --color-accent: #5b46d9;      /* violet — primary   */
+  --color-accent-2: #0d8ba6;    /* teal   — secondary */
+  --color-accent-3: #a83bc4;    /* orchid — highlight */
+
+  /* -- Type ramp: fluid + clamped, so it never breaks at any viewport -- */
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --text-hero: clamp(2.75rem, 8.6vw, 8.25rem);
+  --text-hero--line-height: 0.92;
+  --text-hero--letter-spacing: -0.045em;
+  --text-section: clamp(2rem, 5.2vw, 4.25rem);
+  --text-section--line-height: 1.02;
+  --text-section--letter-spacing: -0.035em;
+  --text-lede: clamp(1.05rem, 1.5vw, 1.35rem);
+  --text-lede--line-height: 1.6;
+
+  /* -- Radii -- */
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+
+  /* -- Shadows. On a light theme these carry ALL the depth. Tinted toward
+        the accent hue rather than neutral grey — grey shadows on white read
+        as dirt, coloured ones read as light. -- */
+  --shadow-card: 0 1px 2px #0d11200f, 0 12px 32px -18px #0d112026;
+  --shadow-glow-sm: 0 1px 2px #0d112010, 0 8px 24px -12px #5b46d940;
+  --shadow-glow: 0 1px 2px #0d112014, 0 24px 60px -24px #5b46d959, 0 0 60px -40px #0d8ba64d;
+  --shadow-lift: 0 24px 60px -32px #0d112059;
+
+  /* -- Motion. One easing family keeps everything feeling like one object. -- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s var(--ease-smooth) infinite;
+  --animate-float: float 9s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 #0d8ba659; }
+  70%      { box-shadow: 0 0 0 9px #0d8ba600; }
+}
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -14px, 0); }
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  /* Ambient colour wash sitting *behind* the WebGL canvas. Very low alpha:
+     on a light ground these read as sunlight, and it takes almost nothing
+     before they start to look like a stain instead. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(60rem 40rem at 15% -10%, #5b46d914, transparent 65%),
+      radial-gradient(50rem 38rem at 92% 8%, #0d8ba612, transparent 62%),
+      radial-gradient(70rem 50rem at 50% 108%, #a83bc40d, transparent 70%);
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 22%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-ground); }
+  ::-webkit-scrollbar-thumb {
+    background: #0d112026;
+    border-radius: 99px;
+    border: 3px solid var(--color-ground);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #0d112040; }
+  html { scrollbar-color: #0d112026 var(--color-ground); scrollbar-width: thin; }
+}
+
+/* ==========================================================================
+   3. COMPONENTS
+   ========================================================================== */
+@layer components {
+
+  /* ---- Layout ---------------------------------------------------------- */
+  .shell { @apply mx-auto w-full max-w-[80rem] px-6 sm:px-8 lg:px-12; }
+
+  .section-label {
+    @apply font-mono text-[0.7rem] uppercase tracking-[0.32em] text-ink-soft;
+  }
+
+  /* ---- Grain overlay ---------------------------------------------------
+     On a light theme the grain must MULTIPLY (darken) rather than overlay,
+     and at a far lower opacity — light surfaces show noise much more
+     readily than dark ones do. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.018;
+    mix-blend-mode: multiply;
+  }
+
+  /* ---- Glassmorphism ---------------------------------------------------
+     Frosted white over the page wash. `backdrop-filter` is the expensive
+     part of this aesthetic, so it is applied only to small, non-scrolling
+     surfaces and the compositor stays cheap. */
+  .glass {
+    background: linear-gradient(160deg, #ffffffe6, #ffffffb8 45%, #ffffffa6);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid var(--color-hairline);
+    box-shadow: var(--shadow-card);
+  }
+
+  .glass-strong {
+    background: linear-gradient(160deg, #fffffff2, #ffffffd9 45%, #ffffffcc);
+    backdrop-filter: blur(26px) saturate(170%);
+    -webkit-backdrop-filter: blur(26px) saturate(170%);
+    border: 1px solid #0d11201f;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* ---- Chips ----------------------------------------------------------- */
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-pill px-3.5 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-ink-soft;
+    background: #ffffffd9;
+    border: 1px solid var(--color-hairline);
+    transition:
+      color 0.4s var(--ease-smooth),
+      background 0.4s var(--ease-smooth),
+      border-color 0.4s var(--ease-smooth);
+  }
+  .chip:hover {
+    color: var(--color-ink);
+    background: #0d112012;
+    border-color: #0d112026;
+  }
+
+  /* ---- Buttons ---------------------------------------------------------
+     Inverted from a dark theme: the primary button is DARK on a light page,
+     which is what makes it the strongest thing on screen. */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2.5 rounded-pill px-7 py-3.5 text-sm font-medium;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      transform 0.5s var(--ease-out-expo),
+      box-shadow 0.5s var(--ease-out-expo),
+      color 0.3s var(--ease-smooth),
+      background 0.3s var(--ease-smooth),
+      border-color 0.3s var(--ease-smooth);
+  }
+
+  .btn-primary {
+    color: #ffffff;
+    background: linear-gradient(135deg, #1b1740, #2f2470 45%, #5b46d9);
+    box-shadow: var(--shadow-glow-sm);
+  }
+  /* Sheen sweeping across on hover — a pure transform, so no layout cost. */
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent 20%, #ffffff40 50%, transparent 80%);
+    transform: translateX(-120%);
+    transition: transform 0.85s var(--ease-out-expo);
+  }
+  .btn-primary:hover { box-shadow: var(--shadow-glow); }
+  .btn-primary:hover::after { transform: translateX(120%); }
+
+  .btn-ghost {
+    color: var(--color-ink);
+    background: #ffffffcc;
+    border: 1px solid #0d11201f;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-card);
+  }
+  .btn-ghost:hover {
+    background: #ffffff;
+    border-color: #5b46d959;
+    box-shadow: 0 8px 30px -14px #5b46d980;
+  }
+
+  .btn:active { transform: scale(0.97); }
+
+  /* ---- Text treatments ------------------------------------------------- */
+  .text-gradient {
+    background: linear-gradient(102deg, var(--color-ink) 6%, var(--color-accent) 40%, var(--color-accent-3) 70%, var(--color-accent-2) 96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Animated underline for inline links. */
+  .link-underline {
+    @apply relative inline-block;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.5s var(--ease-out-expo);
+  }
+  .link-underline:hover { background-size: 100% 1px; }
+
+  /* ---- Hairline divider ------------------------------------------------ */
+  .rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #0d112024 15%, #0d112024 85%, transparent);
+  }
+
+  /* ---- Project / tilt card ---------------------------------------------
+     ui/tilt.js only ever writes the custom properties --rx, --ry, --mx, --my.
+     CSS does all of the painting. Because those feed a `transform` and a
+     `background`, nothing here can trigger layout or paint invalidation of
+     surrounding content. */
+  .tilt {
+    --rx: 0deg;
+    --ry: 0deg;
+    --mx: 50%;
+    --my: 50%;
+    transform-style: preserve-3d;
+    transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));
+    transition:
+      transform 0.7s var(--ease-out-expo),
+      box-shadow 0.6s var(--ease-out-expo),
+      border-color 0.6s var(--ease-out-expo);
+    will-change: transform;
+  }
+  /* While the pointer is inside the card we drop the transform transition so
+     tracking is 1:1 with the cursor; it comes back for the release. */
+  .tilt.is-tilting {
+    transition:
+      box-shadow 0.6s var(--ease-out-expo),
+      border-color 0.6s var(--ease-out-expo);
+  }
+  .tilt:hover {
+    box-shadow: var(--shadow-glow), var(--shadow-lift);
+    border-color: #5b46d933;
+  }
+
+  /* Cursor-following spotlight, revealed only on hover. */
+  .tilt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-smooth);
+    background: radial-gradient(24rem 24rem at var(--mx) var(--my), #5b46d91f, transparent 60%);
+  }
+  .tilt:hover::before { opacity: 1; }
+
+  /* Children that should visually lift out of the card plane on tilt. */
+  .tilt-layer {
+    transform: translateZ(45px);
+    transform-style: preserve-3d;
+  }
+
+  .tilt-media { transition: transform 0.9s var(--ease-out-expo); }
+  .tilt:hover .tilt-media { transform: scale(1.06); }
+
+  /* ---- Marquee --------------------------------------------------------- */
+  .marquee-mask {
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  /* ---- Scroll reveal --------------------------------------------------- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+    transition:
+      opacity 0.9s var(--ease-out-expo) var(--reveal-delay, 0ms),
+      transform 0.9s var(--ease-out-expo) var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  /* ---- Nav ------------------------------------------------------------- */
+  .nav-link {
+    @apply relative rounded-pill px-4 py-2 text-sm text-ink-soft;
+    transition: color 0.35s var(--ease-smooth);
+  }
+  .nav-link:hover { color: var(--color-ink); }
+  .nav-link[aria-current="true"] { color: var(--color-ink); }
+  /* Active-section pill, drawn behind the label. */
+  .nav-link[aria-current="true"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: #0d112010;
+    border: 1px solid var(--color-hairline);
+  }
+
+  /* ---- Condensed header ------------------------------------------------
+     ui/nav.js toggles `.is-condensed` once the page scrolls past 40px. Until
+     then the header is fully transparent so the hero reads edge to edge;
+     after that it needs a real backdrop, otherwise section headings scroll
+     visibly *behind* the logo and buttons.
+
+     The blur is on a fixed, non-scrolling bar — the one place a
+     backdrop-filter is genuinely worth its cost, because it stays composited
+     for the whole session instead of being repainted per scroll. */
+  [data-nav] {
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition:
+      background 0.45s var(--ease-smooth),
+      border-color 0.45s var(--ease-smooth),
+      box-shadow 0.45s var(--ease-smooth),
+      backdrop-filter 0.45s var(--ease-smooth);
+  }
+
+  [data-nav].is-condensed {
+    background: #f4f5f9cc;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom-color: var(--color-hairline);
+    box-shadow: 0 1px 24px -12px #0d112040;
+  }
+
+  /* The mobile drawer is hidden with opacity, not display, so that it can
+     animate. That means it still occupies layout inside the header — and the
+     condensed backdrop above would stretch down over the whole closed
+     drawer, blurring a 400px band across the top of the page. Taking it out
+     of flow keeps the header's box exactly one bar tall. */
+  [data-nav-drawer] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+  }
+
+  /* Tighten the bar slightly once condensed — the subtle height change is
+     what makes it feel like it reacted rather than just changed colour. */
+  [data-nav].is-condensed > div:first-child {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  [data-nav] > div:first-child {
+    transition: padding 0.45s var(--ease-out-expo);
+  }
+
+  /* ---- Custom cursor (fine-pointer devices only) ----------------------- */
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    pointer-events: none;
+    border-radius: 999px;
+    opacity: 0;
+    transition:
+      opacity 0.3s var(--ease-smooth),
+      width 0.45s var(--ease-out-expo),
+      height 0.45s var(--ease-out-expo),
+      margin 0.45s var(--ease-out-expo),
+      background-color 0.4s var(--ease-smooth),
+      border-color 0.4s var(--ease-smooth);
+  }
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--color-accent);
+  }
+  .cursor-ring {
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border: 1px solid #0d112040;
+  }
+  .cursor-ring.is-hovering {
+    width: 68px;
+    height: 68px;
+    margin: -34px 0 0 -34px;
+    background: #5b46d914;
+    border-color: #5b46d980;
+  }
+}
+
+/* ==========================================================================
+   4. ACCESSIBILITY — honour reduced-motion everywhere
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+/* ==========================================================================
+   5. PROJECT CARD MEDIA
+   --------------------------------------------------------------------------
+   Each card holds a real screenshot. The image itself is the only thing that
+   scales on hover; the overlays above it stay pin-sharp, which is what makes
+   the movement read as parallax rather than as a blurry zoom.
+   ========================================================================== */
+.card-media {
+  position: relative;
+  overflow: hidden;
+  background-color: #eceef5;
+  border: 1px solid var(--color-hairline);
+  isolation: isolate;
+}
+
+.card-media img.tilt-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Light-mode vignette: a soft WHITE fade at the base rather than a dark
+   theme's black one, so the screenshot dissolves into the card instead of
+   ending on a hard edge. */
+.card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, #ffffffbf 100%);
+}
+
+/* A wash in the card's accent hue, so the grid reads as one family even
+   though the six screenshots have wildly different palettes. Set per card
+   with style="--hue-a: #…; --hue-b: #…". */
+.card-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: soft-light;
+  background:
+    radial-gradient(70% 90% at 20% 10%, var(--hue-a, #5b46d9), transparent 65%),
+    radial-gradient(65% 80% at 85% 85%, var(--hue-b, #0d8ba6), transparent 62%);
+  transition: opacity 0.7s var(--ease-out-expo);
+}
+.tilt:hover .card-media::before { opacity: 0.1; }
+
+/* ==========================================================================
+   6. SKILL METERS
+   --------------------------------------------------------------------------
+   The fill width comes from --level, set inline per skill. It animates from
+   0 only once the row scrolls into view — the reveal observer adds
+   .is-visible, and the transition does the rest. No JS animation loop.
+   ========================================================================== */
+.meter {
+  position: relative;
+  height: 3px;
+  border-radius: 999px;
+  background: #0d112014;
+  overflow: hidden;
+}
+
+.meter::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: var(--level, 0%);
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+  transition: transform 1.2s var(--ease-out-expo) var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible .meter::after,
+.meter[data-reveal].is-visible::after {
+  transform: scaleX(1);
+}
+
+/* ==========================================================================
+   7. PROJECT LAB — filter tabs + compact project cards
+   --------------------------------------------------------------------------
+   The lab holds 25 cards, so each one has to stay cheap. These deliberately
+   do NOT use .glass: 25 simultaneous backdrop-filter layers is the fastest
+   way to make a page stutter on scroll. Solid white with a soft shadow is
+   visually stronger here anyway.
+   ========================================================================== */
+.filter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-hairline);
+  background: #ffffffcc;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.35s var(--ease-smooth),
+    background 0.35s var(--ease-smooth),
+    border-color 0.35s var(--ease-smooth),
+    box-shadow 0.35s var(--ease-smooth);
+}
+.filter-tab:hover {
+  color: var(--color-ink);
+  background: #ffffff;
+  border-color: #0d112026;
+}
+.filter-tab[aria-selected="true"] {
+  color: #ffffff;
+  background: linear-gradient(135deg, #1b1740, #2f2470 50%, #5b46d9);
+  border-color: transparent;
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.filter-count {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.lab-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.1rem;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+  padding: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.55s var(--ease-out-expo),
+    border-color 0.45s var(--ease-smooth),
+    box-shadow 0.55s var(--ease-out-expo);
+}
+
+/* Accent hairline that wipes in along the top edge on hover. */
+.lab-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-2), transparent);
+  transform: scaleX(0);
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.lab-card:hover {
+  transform: translateY(-4px);
+  border-color: #5b46d92e;
+  box-shadow: 0 1px 2px #0d112014, 0 22px 48px -26px #5b46d966;
+}
+.lab-card:hover::before { transform: scaleX(1); }
+
+/* Monospaced index number in the corner of each lab card. */
+.lab-index {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-muted);
+}
+
+/* Small tech tag — lighter weight than .chip, for dense lists. */
+.stack-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.4rem;
+  border: 1px solid #0d11201f;
+  /* Opaque, not translucent: these sit above the WebGL canvas, and a
+     see-through fill let the particle field bleed through the label. */
+  background: var(--color-surface);
+  padding: 0.25rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   8. ARCHITECTURE PANEL (flagship project)
+   --------------------------------------------------------------------------
+   Stands in for a screenshot on the production projects, which are private.
+   A layered stack diagram communicates more to an engineering recruiter than
+   a blurred dashboard capture would anyway.
+   ========================================================================== */
+.arch-layer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.7rem;
+  border: 1px solid #0d11201a;
+  background: var(--color-surface);
+  padding: 0.7rem 0.9rem;
+  transition: border-color 0.5s var(--ease-smooth), box-shadow 0.5s var(--ease-smooth);
+}
+.tilt:hover .arch-layer {
+  border-color: #5b46d92e;
+  box-shadow: 0 6px 18px -12px #5b46d966;
+}
+
+.arch-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Monogram tile used where a project has no public screenshot. */
+.monogram {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--mono-a, #5b46d9), var(--mono-b, #0d8ba6));
+  box-shadow: 0 12px 32px -16px var(--mono-a, #5b46d9);
+}

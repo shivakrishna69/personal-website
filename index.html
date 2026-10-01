@@ -1,0 +1,1462 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f4f5f9" />
+
+    <!-- ── SEO / SOCIAL ────────────────────────────────────────────────── -->
+    <title>A. Shiva Krishna — Gen AI Developer</title>
+    <meta
+      name="description"
+      content="Generative AI developer building agentic systems and RAG pipelines in production — LangChain, OpenAI, Pinecone, Redis, Docker and AWS. Lead developer on Aivonis."
+    />
+    <meta property="og:title" content="A. Shiva Krishna — Gen AI Developer" />
+    <meta
+      property="og:description"
+      content="Agentic AI and RAG systems in production. Lead developer on Aivonis; 30+ applied AI projects."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/shiva-portrait.jpg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preload" as="image" href="/images/shiva-portrait.jpg" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script type="module" src="/src/main.js"></script>
+  </head>
+
+  <body class="antialiased">
+    <a
+      href="#work"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-100 focus:rounded-pill focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-white"
+    >
+      Skip to content
+    </a>
+
+    <!-- 3D canvas. Customise everything in src/three/config.js -->
+    <canvas
+      id="webgl"
+      class="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-0"
+      aria-hidden="true"
+    ></canvas>
+
+    <div
+      class="grain"
+      aria-hidden="true"
+      style="
+        background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);
+      "
+    ></div>
+
+    <div class="fixed inset-x-0 top-0 z-50 h-px bg-transparent" aria-hidden="true">
+      <div
+        data-scroll-progress
+        class="h-full origin-left scale-x-0 bg-gradient-to-r from-accent via-accent-3 to-accent-2"
+      ></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         NAV
+         ══════════════════════════════════════════════════════════════════ -->
+    <header data-nav class="fixed inset-x-0 top-0 z-40 transition-all duration-500">
+      <div class="shell flex items-center justify-between py-5">
+        <a href="#top" class="group flex items-center gap-3" aria-label="Shiva Krishna, home">
+          <img
+            src="/images/logo-mark.png"
+            alt="" width="36" height="36" decoding="async"
+            class="relative h-9 w-9 rounded-xl object-cover shadow-glow-sm transition-transform duration-500 ease-out-expo group-hover:rotate-[8deg] group-hover:scale-105"
+          />
+          <span class="font-display text-[0.95rem] font-medium tracking-tight">
+            Shiva<span class="text-ink-muted">Krishna</span>
+          </span>
+        </a>
+
+        <nav class="hidden items-center gap-1 rounded-pill glass px-2 py-1.5 md:flex" aria-label="Primary">
+          <a href="#about" data-nav-link class="nav-link">About</a>
+          <a href="#experience" data-nav-link class="nav-link">Experience</a>
+          <a href="#work" data-nav-link class="nav-link">Work</a>
+          <a href="#lab" data-nav-link class="nav-link">AI Lab</a>
+          <a href="#contact" data-nav-link class="nav-link">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <a href="#contact" class="btn btn-primary hidden !px-5 !py-2.5 text-[0.82rem] sm:inline-flex" data-magnetic>
+            <span data-magnetic-label>Let's talk</span>
+          </a>
+
+          <button
+            type="button"
+            data-nav-toggle
+            aria-expanded="false"
+            aria-controls="nav-drawer"
+            aria-label="Toggle navigation"
+            class="grid h-10 w-10 place-items-center rounded-xl glass md:hidden"
+          >
+            <span class="flex flex-col gap-1.5">
+              <span class="block h-px w-4 bg-ink"></span>
+              <span class="block h-px w-4 bg-ink"></span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="nav-drawer"
+        data-nav-drawer
+        aria-hidden="true"
+        class="shell -translate-y-3 opacity-0 pointer-events-none transition-all duration-400 ease-out-expo md:hidden"
+      >
+        <nav class="glass-strong flex flex-col rounded-card p-3" aria-label="Mobile">
+          <a href="#about" class="rounded-xl px-4 py-3.5 text-lg font-display transition-colors hover:bg-ink/5">About</a>
+          <a href="#experience" class="rounded-xl px-4 py-3.5 text-lg font-display transition-colors hover:bg-ink/5">Experience</a>
+          <a href="#work" class="rounded-xl px-4 py-3.5 text-lg font-display transition-colors hover:bg-ink/5">Work</a>
+          <a href="#lab" class="rounded-xl px-4 py-3.5 text-lg font-display transition-colors hover:bg-ink/5">AI Lab</a>
+          <a href="#contact" class="rounded-xl px-4 py-3.5 text-lg font-display transition-colors hover:bg-ink/5">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ════════════════════════════════════════════════════════════════
+           SECTION · HERO
+           ════════════════════════════════════════════════════════════════ -->
+      <section class="relative flex min-h-svh flex-col justify-center pt-32 pb-20">
+        <div class="shell">
+          <div class="grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
+            <div class="lg:col-span-7" data-reveal-group="110">
+              <div class="chip mb-8" data-reveal>
+                <span class="h-1.5 w-1.5 rounded-full bg-accent-2 animate-pulse-dot"></span>
+                Lead developer on Aivonis
+              </div>
+
+              <p class="mb-3 font-mono text-sm uppercase tracking-[0.4em] text-ink-muted" data-reveal>I'm</p>
+
+              <h1 class="font-display text-hero font-semibold" data-reveal>
+                Shiva
+                <span class="serif-accent text-gradient">Krishna</span>
+              </h1>
+
+              <p class="mt-6 font-display text-xl tracking-tight text-ink-soft sm:text-2xl" data-reveal>
+                Full Stack Gen AI Developer — Agentic Systems &amp; RAG
+              </p>
+
+              <p class="mt-7 max-w-[52ch] text-lede text-ink-soft" data-reveal>
+                I take an architecture and build it into a shipped product — agentic AI
+                workflows, RAG pipelines and vector search, deployed on AWS. Currently the lead
+                developer on <span class="text-ink">Aivonis</span>, an agentic voice and
+                messaging platform.
+              </p>
+
+              <div class="mt-11 flex flex-wrap items-center gap-4" data-reveal>
+                <a href="#work" class="btn btn-primary" data-magnetic>
+                  <span data-magnetic-label>See my work</span>
+                  <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <a href="/shiva-krishna-resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost" data-magnetic>
+                  <span data-magnetic-label>Download résumé</span>
+                  <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M8 3v8m0 0L5 8m3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5" data-reveal data-reveal-delay="240">
+              <div class="relative mx-auto max-w-sm lg:max-w-none">
+                <div class="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-accent/10 blur-3xl" aria-hidden="true"></div>
+
+                <div class="glass relative overflow-hidden rounded-[2rem] p-2 shadow-glow">
+                  <img
+                    src="/images/shiva-portrait.jpg"
+                    alt="A. Shiva Krishna"
+                    width="900" height="1000"
+                    fetchpriority="high" decoding="async"
+                    class="w-full rounded-[1.6rem] object-cover"
+                  />
+                  <div
+                    class="pointer-events-none absolute inset-2 rounded-[1.6rem] mix-blend-soft-light"
+                    style="background: linear-gradient(200deg, #7c6bff80, transparent 55%, #22d3ee66)"
+                    aria-hidden="true"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STATS ────────────────────────────────────────────────────
+               The experience figure is computed at runtime from a single
+               start date in src/ui/experience.js — it never goes stale and
+               never needs editing. -->
+          <dl class="mt-20 grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-10" data-reveal-group="80">
+            <div data-reveal>
+              <dt class="section-label">Experience</dt>
+              <dd class="mt-2 font-display text-3xl font-medium tracking-tight sm:text-4xl">
+                <span data-experience="years">3</span><span class="text-ink-muted">y</span>
+                <span data-experience="months">4</span><span class="text-ink-muted">m</span>
+              </dd>
+            </div>
+            <div data-reveal>
+              <dt class="section-label">Personal projects</dt>
+              <dd class="mt-2 font-display text-3xl font-medium tracking-tight sm:text-4xl">30<span class="text-ink-muted">+</span></dd>
+            </div>
+            <div data-reveal>
+              <dt class="section-label">Production apps</dt>
+              <dd class="mt-2 font-display text-3xl font-medium tracking-tight sm:text-4xl">4</dd>
+            </div>
+            <div data-reveal>
+              <dt class="section-label">Websites shipped</dt>
+              <dd class="mt-2 font-display text-3xl font-medium tracking-tight sm:text-4xl">20<span class="text-ink-muted">+</span></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           MARQUEE
+           ════════════════════════════════════════════════════════════════ -->
+      <section class="relative overflow-hidden border-y border-ink/10 py-6" aria-hidden="true">
+        <div class="marquee-mask">
+          <div class="flex w-max animate-marquee gap-12 pr-12 font-display text-sm tracking-tight text-ink-muted">
+            <span class="flex shrink-0 gap-12">
+              <span>Agentic AI</span><span class="text-accent">✦</span>
+              <span>RAG</span><span class="text-accent">✦</span>
+              <span>LangChain</span><span class="text-accent">✦</span>
+              <span>Pinecone</span><span class="text-accent">✦</span>
+              <span>Redis</span><span class="text-accent">✦</span>
+              <span>OpenAI</span><span class="text-accent">✦</span>
+              <span>Hugging Face</span><span class="text-accent">✦</span>
+              <span>Docker</span><span class="text-accent">✦</span>
+              <span>AWS</span><span class="text-accent">✦</span>
+              <span>Python</span><span class="text-accent">✦</span>
+            </span>
+            <span class="flex shrink-0 gap-12">
+              <span>Agentic AI</span><span class="text-accent">✦</span>
+              <span>RAG</span><span class="text-accent">✦</span>
+              <span>LangChain</span><span class="text-accent">✦</span>
+              <span>Pinecone</span><span class="text-accent">✦</span>
+              <span>Redis</span><span class="text-accent">✦</span>
+              <span>OpenAI</span><span class="text-accent">✦</span>
+              <span>Hugging Face</span><span class="text-accent">✦</span>
+              <span>Docker</span><span class="text-accent">✦</span>
+              <span>AWS</span><span class="text-accent">✦</span>
+              <span>Python</span><span class="text-accent">✦</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           SECTION · ABOUT
+           ════════════════════════════════════════════════════════════════ -->
+      <section id="about" class="relative scroll-mt-24 py-28 sm:py-40">
+        <div class="shell grid gap-14 lg:grid-cols-12 lg:gap-16">
+          <div class="lg:col-span-5">
+            <div class="lg:sticky lg:top-28" data-reveal>
+              <article class="glass relative overflow-hidden rounded-card p-8">
+                <div class="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-accent/12 blur-3xl" aria-hidden="true"></div>
+
+                <img
+                  src="/images/logo-mark.png"
+                  alt="" width="80" height="80" loading="lazy" decoding="async"
+                  class="relative h-20 w-20 rounded-2xl object-cover shadow-glow"
+                />
+
+                <h2 class="mt-7 font-display text-2xl font-medium tracking-tight">A. Shiva Krishna</h2>
+                <p class="mt-1.5 text-sm text-ink-muted">Full Stack Gen AI Developer</p>
+
+                <div class="rule my-7"></div>
+
+                <dl class="space-y-4 text-sm">
+                  <div class="flex items-baseline justify-between gap-4">
+                    <dt class="text-ink-muted">Experience</dt>
+                    <dd><span data-experience="long">3 years 4 months</span></dd>
+                  </div>
+                  <div class="flex items-baseline justify-between gap-4">
+                    <dt class="text-ink-muted">Focus</dt>
+                    <dd>Agentic AI &amp; RAG</dd>
+                  </div>
+                  <div class="flex items-baseline justify-between gap-4">
+                    <dt class="text-ink-muted">Phone</dt>
+                    <dd><a href="tel:+917995555083" class="link-underline transition-colors hover:text-ink">+91 79955 55083</a></dd>
+                  </div>
+                  <div class="flex items-baseline justify-between gap-4">
+                    <dt class="text-ink-muted">Status</dt>
+                    <dd class="flex items-center gap-2">
+                      <span class="h-1.5 w-1.5 rounded-full bg-accent-2 animate-pulse-dot"></span>
+                      Available
+                    </dd>
+                  </div>
+                </dl>
+              </article>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <p class="section-label" data-reveal>01 — About</p>
+
+            <h2 class="mt-6 max-w-[19ch] font-display text-section font-semibold" data-reveal>
+              From architecture to
+              <span class="serif-accent text-gradient">shipped system</span>
+            </h2>
+
+            <div class="mt-9 max-w-[58ch] space-y-6 text-lede text-ink-soft" data-reveal-group="70">
+              <p data-reveal>
+                I'm A. Shiva Krishna, a Gen AI developer with
+                <span data-experience="long" class="text-ink">3 years 4 months</span> of
+                experience. I work from a solution architect's design and own the build:
+                turning a system diagram into a running, deployed application — agents,
+                retrieval, data layer, infrastructure and interface.
+              </p>
+              <p data-reveal>
+                My current focus is RAG systems, agentic workflows, MCP servers and voice AI:
+                LangChain, CrewAI and AutoGen for orchestration, vector search in Pinecone, Chroma
+                and FAISS, and models from OpenAI, Claude, Llama and Groq — shipped with Python,
+                FastAPI and React on AWS.
+              </p>
+              <p data-reveal>
+                I came to AI from frontend. Before this I delivered 20+ production websites as a
+                UX/UI developer, which is why the systems I build ship with an interface people
+                can actually use, not just an endpoint.
+              </p>
+            </div>
+
+            <!-- ── SKILL METERS ─────────────────────────────────────────
+                 To add a skill, copy one <li> and set --level. -->
+            <div class="mt-14" data-reveal>
+              <p class="section-label mb-7">Capability</p>
+              <ul class="space-y-6" data-reveal-group="90">
+                <li data-reveal>
+                  <div class="mb-2.5 flex items-baseline justify-between">
+                    <span class="font-display text-sm font-medium tracking-tight">Generative AI &amp; LLM applications</span>
+                    <span class="font-mono text-xs text-ink-muted">90%</span>
+                  </div>
+                  <div class="meter" style="--level: 90%"></div>
+                </li>
+                <li data-reveal>
+                  <div class="mb-2.5 flex items-baseline justify-between">
+                    <span class="font-display text-sm font-medium tracking-tight">RAG &amp; vector databases</span>
+                    <span class="font-mono text-xs text-ink-muted">88%</span>
+                  </div>
+                  <div class="meter" style="--level: 88%"></div>
+                </li>
+                <li data-reveal>
+                  <div class="mb-2.5 flex items-baseline justify-between">
+                    <span class="font-display text-sm font-medium tracking-tight">LangChain &amp; LCEL</span>
+                    <span class="font-mono text-xs text-ink-muted">85%</span>
+                  </div>
+                  <div class="meter" style="--level: 85%"></div>
+                </li>
+                <li data-reveal>
+                  <div class="mb-2.5 flex items-baseline justify-between">
+                    <span class="font-display text-sm font-medium tracking-tight">Python &amp; deep learning</span>
+                    <span class="font-mono text-xs text-ink-muted">85%</span>
+                  </div>
+                  <div class="meter" style="--level: 85%"></div>
+                </li>
+                <li data-reveal>
+                  <div class="mb-2.5 flex items-baseline justify-between">
+                    <span class="font-display text-sm font-medium tracking-tight">Frontend (HTML, CSS, JavaScript)</span>
+                    <span class="font-mono text-xs text-ink-muted">90%</span>
+                  </div>
+                  <div class="meter" style="--level: 90%"></div>
+                </li>
+                <li data-reveal>
+                  <div class="mb-2.5 flex items-baseline justify-between">
+                    <span class="font-display text-sm font-medium tracking-tight">Cloud &amp; deployment (AWS, Docker)</span>
+                    <span class="font-mono text-xs text-ink-muted">80%</span>
+                  </div>
+                  <div class="meter" style="--level: 80%"></div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Toolbelt, grouped so a recruiter can scan by layer. -->
+            <div class="mt-14 space-y-6" data-reveal>
+              <div>
+                <p class="section-label mb-3.5">Gen AI &amp; LLM</p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="stack-tag">RAG</span>
+                  <span class="stack-tag">Agentic AI</span>
+                  <span class="stack-tag">Multi-Agent Systems</span>
+                  <span class="stack-tag">MCP</span>
+                  <span class="stack-tag">Prompt Engineering</span>
+                  <span class="stack-tag">Tool / Function Calling</span>
+                  <span class="stack-tag">Embeddings</span>
+                  <span class="stack-tag">Fine-Tuning</span>
+                  <span class="stack-tag">LLM Evaluation</span>
+                </div>
+              </div>
+              <div>
+                <p class="section-label mb-3.5">Frameworks &amp; agents</p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="stack-tag">LangChain</span>
+                  <span class="stack-tag">LangSmith</span>
+                  <span class="stack-tag">CrewAI</span>
+                  <span class="stack-tag">Microsoft AutoGen</span>
+                  <span class="stack-tag">n8n</span>
+                  <span class="stack-tag">Hugging Face</span>
+                </div>
+              </div>
+              <div>
+                <p class="section-label mb-3.5">LLMs &amp; vector DBs</p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="stack-tag">OpenAI (GPT-4o)</span>
+                  <span class="stack-tag">Claude</span>
+                  <span class="stack-tag">Llama</span>
+                  <span class="stack-tag">Mistral</span>
+                  <span class="stack-tag">Gemma</span>
+                  <span class="stack-tag">Qwen</span>
+                  <span class="stack-tag">Groq</span>
+                  <span class="stack-tag">Ollama</span>
+                  <span class="stack-tag">Pinecone</span>
+                  <span class="stack-tag">Chroma</span>
+                  <span class="stack-tag">FAISS</span>
+                </div>
+              </div>
+              <div>
+                <p class="section-label mb-3.5">Languages &amp; backend</p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="stack-tag">Python</span>
+                  <span class="stack-tag">TypeScript</span>
+                  <span class="stack-tag">JavaScript</span>
+                  <span class="stack-tag">FastAPI</span>
+                  <span class="stack-tag">Flask</span>
+                  <span class="stack-tag">Node.js</span>
+                  <span class="stack-tag">Express.js</span>
+                  <span class="stack-tag">REST APIs</span>
+                  <span class="stack-tag">WebSockets</span>
+                </div>
+              </div>
+              <div>
+                <p class="section-label mb-3.5">Frontend &amp; design</p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="stack-tag">React</span>
+                  <span class="stack-tag">HTML / CSS / JS</span>
+                  <span class="stack-tag">WordPress</span>
+                  <span class="stack-tag">Figma</span>
+                  <span class="stack-tag">UX/UI Design</span>
+                </div>
+              </div>
+              <div>
+                <p class="section-label mb-3.5">Cloud, data &amp; DevOps</p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="stack-tag">AWS (S3, Lambda, Cognito)</span>
+                  <span class="stack-tag">Docker</span>
+                  <span class="stack-tag">MongoDB</span>
+                  <span class="stack-tag">Redis</span>
+                  <span class="stack-tag">Streamlit</span>
+                  <span class="stack-tag">Gradio</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           SECTION · EXPERIENCE
+           ════════════════════════════════════════════════════════════════ -->
+      <section id="experience" class="relative scroll-mt-24 py-24 sm:py-32">
+        <div class="shell">
+          <p class="section-label" data-reveal>02 — Experience</p>
+
+          <h2 class="mt-6 max-w-[16ch] font-display text-section font-semibold" data-reveal>
+            Where I've
+            <span class="serif-accent text-gradient">shipped</span>
+          </h2>
+
+          <ul class="mt-14 border-t border-ink/10" data-reveal-group="110">
+            <li class="group grid gap-6 border-b border-ink/10 py-9 transition-colors duration-500 hover:bg-ink/[0.03] md:grid-cols-12 md:gap-10" data-reveal>
+              <div class="md:col-span-3">
+                <p class="font-mono text-xs text-accent">2025 — Present</p>
+                <p class="mt-1.5 text-sm text-ink-muted">Current role</p>
+              </div>
+              <div class="md:col-span-9">
+                <h3 class="font-display text-2xl font-medium tracking-tight sm:text-3xl">
+                  Suzva Software Technologies Pvt Ltd
+                </h3>
+                <p class="mt-1.5 text-sm text-accent-2">Full Stack Gen AI Developer</p>
+                <p class="mt-4 max-w-[62ch] text-ink-muted">
+                  Rejoined Suzva to take LLM products from prototype to production. Lead developer
+                  on Aivonis, and delivered the Gen AI builds for Tributoo, Tablify and Vivontic.
+                </p>
+                <ul class="mt-4 max-w-[62ch] list-disc space-y-2 pl-5 text-ink-muted marker:text-accent">
+                  <li><span class="text-ink-soft">Aivonis — Voice AI &amp; Agentic RAG SaaS:</span> real-time phone AI agents with tenant-isolated knowledge retrieval, built on Twilio, Pinecone, OpenAI, FastAPI and React.</li>
+                  <li><span class="text-ink-soft">Medical AI Assistant (RAG):</span> question answering over medical PDFs using GPT-4o, LangChain, OpenAI embeddings and Chroma semantic search.</li>
+                  <li><span class="text-ink-soft">Agentic Stock Analysis (CrewAI):</span> Analyst and Trader agents on Llama 3.3 70B (Groq) using live yfinance data to give Buy/Sell/Hold recommendations.</li>
+                  <li><span class="text-ink-soft">Custom MCP Server:</span> Python MCP server exposing a weather tool via the OpenWeatherMap API, integrated with Claude Desktop.</li>
+                </ul>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="stack-tag">Agentic RAG</span>
+                  <span class="stack-tag">Voice AI</span>
+                  <span class="stack-tag">CrewAI</span>
+                  <span class="stack-tag">MCP</span>
+                  <span class="stack-tag">Twilio</span>
+                  <span class="stack-tag">Pinecone</span>
+                  <span class="stack-tag">FastAPI</span>
+                  <span class="stack-tag">React</span>
+                  <span class="stack-tag">AWS</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="group grid gap-6 border-b border-ink/10 py-9 transition-colors duration-500 hover:bg-ink/[0.03] md:grid-cols-12 md:gap-10" data-reveal>
+              <div class="md:col-span-3">
+                <p class="font-mono text-xs text-accent">2024 — 2025</p>
+              </div>
+              <div class="md:col-span-9">
+                <h3 class="font-display text-2xl font-medium tracking-tight sm:text-3xl">
+                  Cogniron Technologies Pvt Ltd
+                </h3>
+                <p class="mt-1.5 text-sm text-accent-2">UX/UI Developer</p>
+                <ul class="mt-4 max-w-[62ch] list-disc space-y-2 pl-5 text-ink-muted marker:text-accent">
+                  <li>Designed and built responsive, user-focused web interfaces using Figma, HTML/CSS/JavaScript and WordPress for multiple client websites.</li>
+                  <li>Delivered UI layouts, forms and multi-level navigation across EdTech, IT services and construction domains.</li>
+                  <li>Client sites included Adept Technical Services, NeutroNest, On-Demand Testing, Appi-fy, Insuraksha and Lifestyle Membership.</li>
+                </ul>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="stack-tag">Figma</span>
+                  <span class="stack-tag">HTML &amp; CSS</span>
+                  <span class="stack-tag">JavaScript</span>
+                  <span class="stack-tag">WordPress</span>
+                  <span class="stack-tag">UX/UI Design</span>
+                </div>
+              </div>
+            </li>
+
+            <li class="group grid gap-6 border-b border-ink/10 py-9 transition-colors duration-500 hover:bg-ink/[0.03] md:grid-cols-12 md:gap-10" data-reveal>
+              <div class="md:col-span-3">
+                <p class="font-mono text-xs text-accent">2023 — 2024</p>
+                <p class="mt-1.5 text-sm text-ink-muted">Where it started</p>
+              </div>
+              <div class="md:col-span-9">
+                <h3 class="font-display text-2xl font-medium tracking-tight sm:text-3xl">
+                  Suzva Software Technologies Pvt Ltd
+                </h3>
+                <p class="mt-1.5 text-sm text-accent-2">UX/UI Developer</p>
+                <p class="mt-4 max-w-[62ch] text-ink-muted">
+                  Started my career at Suzva, designing and building client websites and
+                  interfaces with Figma, HTML, CSS, JavaScript and WordPress.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="stack-tag">Figma</span>
+                  <span class="stack-tag">Web Development</span>
+                  <span class="stack-tag">WordPress</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           SECTION · SELECTED WORK (production)
+           ════════════════════════════════════════════════════════════════ -->
+      <section id="work" class="relative scroll-mt-24 py-28 sm:py-36">
+        <div class="shell">
+          <div data-reveal>
+            <p class="section-label">03 — Selected work</p>
+            <h2 class="mt-6 max-w-[16ch] font-display text-section font-semibold">
+              Production
+              <span class="serif-accent text-gradient">systems</span>
+            </h2>
+            <p class="mt-7 max-w-[56ch] text-lede text-ink-soft">
+              Commercial products built at Suzva Software Technologies with React and Node.js,
+              combining my own development with Gen AI tooling. Aivonis is a private codebase,
+              so its panel shows architecture rather than a screenshot.
+            </p>
+          </div>
+
+          <div class="mt-14 grid gap-6 lg:grid-cols-2" data-reveal-group="120">
+            <!-- ── FLAGSHIP · AIVONIS ──────────────────────────────────── -->
+            <article
+              data-tilt="4"
+              data-cursor="hover"
+              data-reveal
+              class="tilt glass group relative overflow-hidden rounded-card p-7 sm:p-9 lg:col-span-2"
+            >
+              <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+
+              <div class="tilt-layer relative grid gap-10 lg:grid-cols-12">
+                <!-- Narrative -->
+                <div class="lg:col-span-6">
+                  <div class="flex flex-wrap items-center gap-2.5">
+                    <span class="chip">Flagship</span>
+                    <span class="chip">Lead developer</span>
+                  </div>
+
+                  <h3 class="mt-6 font-display text-4xl font-medium tracking-tight sm:text-5xl">Aivonis</h3>
+                  <p class="mt-3 text-lg text-accent-2">Agentic AI voice &amp; messaging platform</p>
+
+                  <p class="mt-6 max-w-[52ch] text-ink-soft">
+                    The company's most complex product, and the one I own end to end. An
+                    architect supplies the system design; I build every layer of it — from the
+                    telephony integration through the agent runtime to the AWS deployment.
+                  </p>
+
+                  <ul class="mt-7 space-y-3.5 text-sm text-ink-muted">
+                    <li class="flex gap-3">
+                      <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+                      Integrated Twilio for voice and messaging, then built the agent console,
+                      operator dashboard and authentication flows.
+                    </li>
+                    <li class="flex gap-3">
+                      <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+                      Implemented the RAG pipeline and layered agentic AI on top, with a web
+                      scraper that ingests client sites into the knowledge base automatically.
+                    </li>
+                    <li class="flex gap-3">
+                      <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+                      Built the knowledge-base vector store on Pinecone with Redis for fast
+                      retrieval, and MongoDB for subscriptions and company data.
+                    </li>
+                    <li class="flex gap-3">
+                      <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+                      Shipped a subscription and onboarding model for new customers, then
+                      containerised and deployed the platform on AWS with Docker.
+                    </li>
+                    <li class="flex gap-3">
+                      <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+                      Configured and tested multiple agents against live knowledge bases to
+                      validate retrieval accuracy before release.
+                    </li>
+                  </ul>
+
+                  <div class="mt-8 flex flex-wrap gap-2">
+                    <span class="stack-tag">Agentic AI</span>
+                    <span class="stack-tag">RAG</span>
+                    <span class="stack-tag">Twilio</span>
+                    <span class="stack-tag">Pinecone</span>
+                    <span class="stack-tag">Redis</span>
+                    <span class="stack-tag">MongoDB</span>
+                    <span class="stack-tag">AWS S3</span>
+                    <span class="stack-tag">Docker</span>
+                    <span class="stack-tag">Web scraping</span>
+                    <span class="stack-tag">React</span>
+                    <span class="stack-tag">Node.js</span>
+                  </div>
+                </div>
+
+                <!-- Architecture panel. Layer order = request path, top down. -->
+                <div class="lg:col-span-6">
+                  <div class="rounded-[1.2rem] border border-ink/10 bg-ground/60 p-5 sm:p-6">
+                    <p class="arch-label mb-5">System architecture</p>
+
+                    <div class="space-y-2.5">
+                      <div class="arch-layer">
+                        <span class="font-mono text-[0.6rem] text-accent">01</span>
+                        <div>
+                          <p class="text-sm font-medium">Channel layer</p>
+                          <p class="text-xs text-ink-muted">Twilio voice &amp; SMS · agent console · dashboard</p>
+                        </div>
+                      </div>
+                      <div class="flex justify-center text-ink-muted" aria-hidden="true">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none"><path d="M8 3v10m0 0-3.5-3.5M8 13l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+
+                      <div class="arch-layer">
+                        <span class="font-mono text-[0.6rem] text-accent">02</span>
+                        <div>
+                          <p class="text-sm font-medium">Agent runtime</p>
+                          <p class="text-xs text-ink-muted">Agentic AI orchestration · tool calling</p>
+                        </div>
+                      </div>
+                      <div class="flex justify-center text-ink-muted" aria-hidden="true">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none"><path d="M8 3v10m0 0-3.5-3.5M8 13l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+
+                      <div class="arch-layer">
+                        <span class="font-mono text-[0.6rem] text-accent">03</span>
+                        <div>
+                          <p class="text-sm font-medium">Retrieval</p>
+                          <p class="text-xs text-ink-muted">RAG pipeline · chunking · web-scraped knowledge base</p>
+                        </div>
+                      </div>
+                      <div class="flex justify-center text-ink-muted" aria-hidden="true">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none"><path d="M8 3v10m0 0-3.5-3.5M8 13l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+
+                      <div class="arch-layer">
+                        <span class="font-mono text-[0.6rem] text-accent">04</span>
+                        <div>
+                          <p class="text-sm font-medium">Data layer</p>
+                          <p class="text-xs text-ink-muted">Pinecone · Redis · MongoDB · S3 document store</p>
+                        </div>
+                      </div>
+                      <div class="flex justify-center text-ink-muted" aria-hidden="true">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none"><path d="M8 3v10m0 0-3.5-3.5M8 13l3.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+
+                      <div class="arch-layer">
+                        <span class="font-mono text-[0.6rem] text-accent">05</span>
+                        <div>
+                          <p class="text-sm font-medium">Platform</p>
+                          <p class="text-xs text-ink-muted">Docker containers on AWS</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- VIVONTIC ---------------------------------------------------
+                 TO SWAP IN YOUR OWN SCREENSHOT: replace the file at
+                 public/images/vivontic.jpg (1400x875). Nothing else changes. -->
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #f97316; --hue-b: #5b46d9;">
+                <img
+                  src="/images/vivontic.jpg"
+                  alt="Vivontic - managed remote teams for digital execution"
+                  width="1400" height="875" loading="lazy" decoding="async"
+                  class="tilt-media"
+                />
+              </div>
+              <div class="tilt-layer relative p-6">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span class="chip">React</span>
+                  <span class="chip">Live</span>
+                </div>
+                <h3 class="mt-5 font-display text-2xl font-medium tracking-tight">Vivontic</h3>
+                <p class="mt-2.5 text-sm text-ink-muted">
+                  Corporate platform for a global shared-services company &mdash; managed remote
+                  teams for digital work. Multi-section marketing site with multilingual support.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="stack-tag">React</span>
+                  <span class="stack-tag">Node.js</span>
+                  <span class="stack-tag">Gen AI</span>
+                </div>
+              </div>
+              <a href="https://vivontic.com" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Visit Vivontic"></a>
+            </article>
+
+            <!-- TRIBUTOO ---------------------------------------------------
+                 Screenshot slot: public/images/tributoo.jpg (1400x875). -->
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #d4a017; --hue-b: #5b46d9;">
+                <img
+                  src="/images/tributoo.jpg"
+                  alt="Tributoo - digital memorial pages with QR codes"
+                  width="1400" height="875" loading="lazy" decoding="async"
+                  class="tilt-media"
+                />
+              </div>
+              <div class="tilt-layer relative p-6">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span class="chip">React</span>
+                  <span class="chip">Live</span>
+                </div>
+                <h3 class="mt-5 font-display text-2xl font-medium tracking-tight">Tributoo</h3>
+                <p class="mt-2.5 text-sm text-ink-muted">
+                  Digital memorial platform &mdash; families create private or public remembrance
+                  pages with a unique QR code. GDPR compliant, 10,000+ pages created across
+                  45 countries.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="stack-tag">React</span>
+                  <span class="stack-tag">Node.js</span>
+                  <span class="stack-tag">Gen AI</span>
+                </div>
+              </div>
+              <a href="https://tributoo.com" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Visit Tributoo"></a>
+            </article>
+
+            <!-- FOERDERVEREIN SC NIEDERHAUSEN ------------------------------
+                 No screenshot on file yet. Drop one at
+                 public/images/foerderverein-scn.jpg (1400x875) and swap this
+                 monogram block for a .card-media block like the two above. -->
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-7">
+              <div class="tilt-layer relative">
+                <div class="monogram h-16 w-16 text-xl" style="--mono-a: #1d4ed8; --mono-b: #0d8ba6;" aria-hidden="true">SCN</div>
+                <div class="mt-6 flex flex-wrap items-center gap-2.5">
+                  <span class="chip">React</span>
+                  <span class="chip">Live</span>
+                </div>
+                <h3 class="mt-5 font-display text-2xl font-medium tracking-tight">F&ouml;rderverein SC Niederhausen</h3>
+                <p class="mt-2.5 text-sm text-ink-muted">
+                  Website for a German football club&rsquo;s supporters association &mdash;
+                  membership sign-up, club news, sponsor listings and project showcases.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="stack-tag">React</span>
+                  <span class="stack-tag">Node.js</span>
+                  <span class="stack-tag">Membership flow</span>
+                </div>
+              </div>
+              <a href="https://foerderverein-scn.de" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Visit Foerderverein SC Niederhausen"></a>
+            </article>
+
+            <!-- TABLIFY ----------------------------------------------------
+                 Awaiting detail + screenshot. -->
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-7">
+              <div class="tilt-layer relative">
+                <div class="monogram h-16 w-16 text-2xl" style="--mono-a: #0d8ba6; --mono-b: #5b46d9;" aria-hidden="true">Tb</div>
+                <div class="mt-6 flex flex-wrap items-center gap-2.5">
+                  <span class="chip">Gen AI</span>
+                  <span class="chip">Production</span>
+                </div>
+                <h3 class="mt-5 font-display text-2xl font-medium tracking-tight">Tablify</h3>
+                <p class="mt-2.5 text-sm text-ink-muted">
+                  Commercial Gen AI product delivered end to end &mdash; development through to
+                  live deployment.
+                </p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <span class="stack-tag">React</span>
+                  <span class="stack-tag">Node.js</span>
+                  <span class="stack-tag">Gen AI</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           SECTION · AI LAB
+           A filterable grid of applied projects. Filtering is handled by
+           src/ui/filter.js; each card declares a space-separated
+           `data-category` so one project can appear under several filters.
+           TO ADD A PROJECT: copy an <article>, bump the index, and set
+           data-category to one or more of: agentic llm nlp dl cv
+           ════════════════════════════════════════════════════════════════ -->
+      <section id="lab" class="relative scroll-mt-24 py-28 sm:py-36">
+        <div class="shell" data-filter-root>
+          <div data-reveal>
+            <p class="section-label">04 — Project lab</p>
+            <h2 class="mt-6 max-w-[16ch] font-display text-section font-semibold">
+              Personal AI
+              <span class="serif-accent text-gradient">projects</span>
+            </h2>
+            <p class="mt-7 max-w-[60ch] text-lede text-ink-soft">
+              A selection from 30+ projects built during my time at Suzva Software Technologies —
+              my own datasets and my own implementations, taken from data preparation through
+              training and evaluation to deployment.
+            </p>
+          </div>
+
+          <!-- Filter tabs -->
+          <div class="mt-11 flex flex-wrap items-center gap-3" data-reveal>
+            <div class="flex flex-wrap gap-2.5" role="tablist" aria-label="Filter projects by category">
+              <button type="button" class="filter-tab" data-filter="all" role="tab" aria-selected="true">All</button>
+              <button type="button" class="filter-tab" data-filter="agentic" role="tab" aria-selected="false" tabindex="-1">Agentic &amp; RAG</button>
+              <button type="button" class="filter-tab" data-filter="llm" role="tab" aria-selected="false" tabindex="-1">LLM apps</button>
+              <button type="button" class="filter-tab" data-filter="nlp" role="tab" aria-selected="false" tabindex="-1">NLP</button>
+              <button type="button" class="filter-tab" data-filter="dl" role="tab" aria-selected="false" tabindex="-1">Deep learning</button>
+              <button type="button" class="filter-tab" data-filter="cv" role="tab" aria-selected="false" tabindex="-1">Computer vision</button>
+            </div>
+            <span class="filter-count" data-filter-count aria-live="polite"></span>
+          </div>
+
+          <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group="45">
+            <!-- ═══ AGENTIC & RAG ═══════════════════════════════════════ -->
+            <article class="lab-card" data-category="agentic llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">RAG</span>
+                <span class="lab-index">01</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Medical Knowledge-Base Chatbot</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Ingested a clinical PDF knowledge base, chunked and embedded it into a vector
+                store, and served grounded answers through a RAG pipeline — responses traced
+                back to the source document rather than hallucinated.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">OpenAI</span>
+                <span class="stack-tag">text-embedding-3-large</span>
+                <span class="stack-tag">Vector DB</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="agentic llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">RAG</span>
+                <span class="lab-index">02</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Web-Sourced RAG Pipeline</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                End-to-end ingestion from a remote URL: fetch and unpack the archive, load and
+                split the corpus, embed the chunks into a vector store, then answer questions
+                against it with an OpenAI retrieval chain.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">LangChain</span>
+                <span class="stack-tag">OpenAI</span>
+                <span class="stack-tag">Ingestion</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="agentic" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Vector DB</span>
+                <span class="lab-index">03</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">ChromaDB Vector Store</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Built both ephemeral and named persistent collections, embedded chunked
+                documents locally with Ollama, and tuned top-k retrieval to return the closest
+                matching passages for a query.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">ChromaDB</span>
+                <span class="stack-tag">Ollama</span>
+                <span class="stack-tag">embeddinggemma</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="agentic llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">LCEL</span>
+                <span class="lab-index">04</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">LCEL Translation Service</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                A composable LangChain Expression Language chain that translates input into a
+                target language, served over LangServe and given a Streamlit front end for live
+                use.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">LCEL</span>
+                <span class="stack-tag">Groq</span>
+                <span class="stack-tag">llama-3.1-8b-instant</span>
+                <span class="stack-tag">LangServe</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="agentic llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Chatbot</span>
+                <span class="lab-index">05</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Gen AI Chatbot</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Conversational assistant built on LangChain with session memory, deployed on
+                Streamlit. Migrated the model layer when the original Gemma release was
+                deprecated — a swap the chain abstraction made cheap.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">LangChain</span>
+                <span class="stack-tag">OpenAI</span>
+                <span class="stack-tag">Streamlit</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="agentic" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">In progress</span>
+                <span class="lab-index">06</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">MCP Server Integration</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Current work: building Model Context Protocol servers to expose tools and data
+                sources to agents through a standard interface instead of bespoke glue code.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">MCP</span>
+                <span class="stack-tag">Agents</span>
+                <span class="stack-tag">Tooling</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="agentic llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Prompting</span>
+                <span class="lab-index">07</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Prompt Engineering Patterns</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Applied study of zero-shot, one-shot and few-shot prompting, comparing how each
+                pattern changes output quality and consistency on the same task.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Zero-shot</span>
+                <span class="stack-tag">Few-shot</span>
+                <span class="stack-tag">Evaluation</span>
+              </div>
+            </article>
+
+            <!-- ═══ LLM APPS ════════════════════════════════════════════ -->
+            <article class="lab-card" data-category="llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Speech</span>
+                <span class="lab-index">08</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Whisper Audio Transcription</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Speech-to-text service built on OpenAI Whisper and wrapped in a Flask app, so
+                audio could be uploaded and transcribed through a browser and verified live.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Whisper</span>
+                <span class="stack-tag">OpenAI API</span>
+                <span class="stack-tag">Flask</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Generation</span>
+                <span class="lab-index">09</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">DALL·E 3 Image Generation</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Text-to-image application using DALL·E 3, deployed on Flask with a live
+                prompt-to-render flow.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">DALL·E 3</span>
+                <span class="stack-tag">OpenAI API</span>
+                <span class="stack-tag">Flask</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="llm nlp" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Hugging Face</span>
+                <span class="lab-index">10</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Text Summarization</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Abstractive summarization pipeline built on Hugging Face transformer models,
+                condensing long-form input while preserving meaning.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Hugging Face</span>
+                <span class="stack-tag">Transformers</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="llm nlp" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Hugging Face</span>
+                <span class="lab-index">11</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Text Classification</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Transformer-based classifier sorting input text into labelled categories via the
+                Hugging Face inference API.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Hugging Face</span>
+                <span class="stack-tag">Classification</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Hugging Face</span>
+                <span class="lab-index">12</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Text Generation</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Prompt-driven text generation using hosted Hugging Face models, with decoding
+                parameters tuned for coherence over novelty.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Hugging Face</span>
+                <span class="stack-tag">LLM</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="llm cv" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Multimodal</span>
+                <span class="lab-index">13</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Image-to-Text Captioning</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Vision-language pipeline that reads an image and returns a natural-language
+                description, built on Hugging Face multimodal models.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Hugging Face</span>
+                <span class="stack-tag">Vision-language</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="llm" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Multimodal</span>
+                <span class="lab-index">14</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Text-to-Image Generation</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Diffusion-based image synthesis from text prompts using Hugging Face hosted
+                models.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Hugging Face</span>
+                <span class="stack-tag">Diffusion</span>
+              </div>
+            </article>
+
+            <!-- ═══ NLP ═════════════════════════════════════════════════ -->
+            <article class="lab-card" data-category="nlp" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">NLP</span>
+                <span class="lab-index">15</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">SMS Spam Classifier</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Trained a classifier on a labelled SMS corpus to separate spam from ham,
+                learning the lexical signals that distinguish them and generalising to unseen
+                messages.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">NLP</span>
+                <span class="stack-tag">Text preprocessing</span>
+                <span class="stack-tag">scikit-learn</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="nlp" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">NLP</span>
+                <span class="lab-index">16</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Message Spam Detection</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Second classification model over a broader message set, scoring arbitrary new
+                text as spam or legitimate at inference time.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">NLP</span>
+                <span class="stack-tag">Feature extraction</span>
+              </div>
+            </article>
+
+            <!-- ═══ DEEP LEARNING ═══════════════════════════════════════ -->
+            <article class="lab-card" data-category="dl" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">ANN</span>
+                <span class="lab-index">17</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Customer Churn Prediction</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Feed-forward neural network predicting customer churn from tabular features,
+                with the full pipeline from encoding and scaling through to evaluation.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">ANN</span>
+                <span class="stack-tag">Keras</span>
+                <span class="stack-tag">Classification</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="dl" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">ANN</span>
+                <span class="lab-index">18</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Diabetes Risk Classification</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Binary classifier over a clinical dataset predicting whether a patient is
+                diabetic, with train and test accuracy tracked together to confirm the model
+                generalised rather than memorised.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">ANN</span>
+                <span class="stack-tag">Healthcare data</span>
+                <span class="stack-tag">Keras</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="dl" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">Regression</span>
+                <span class="lab-index">19</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Speed Estimation Model</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Regression network predicting a continuous speed value from a structured
+                dataset, evaluated on held-out data.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">Regression</span>
+                <span class="stack-tag">Keras</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="dl cv" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">CNN</span>
+                <span class="lab-index">20</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Dog vs Cat Image Classifier</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Convolutional network trained on a labelled image corpus with a train/test split
+                and augmentation, classifying unseen images with high accuracy.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">CNN</span>
+                <span class="stack-tag">Keras</span>
+                <span class="stack-tag">Augmentation</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="dl" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">RNN</span>
+                <span class="lab-index">21</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Stock Price Forecasting</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Recurrent sequence model trained on historical price data to forecast forward
+                movement — a study in windowing, scaling and the limits of what time-series
+                models can honestly claim.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">RNN / LSTM</span>
+                <span class="stack-tag">Time series</span>
+                <span class="stack-tag">Keras</span>
+              </div>
+            </article>
+
+            <!-- ═══ COMPUTER VISION ═════════════════════════════════════ -->
+            <article class="lab-card" data-category="cv" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">OpenCV</span>
+                <span class="lab-index">22</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Face Detection</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Haar cascade classifier detecting and bounding human faces in images and video
+                frames.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">OpenCV</span>
+                <span class="stack-tag">Haar cascade</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="cv" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">OpenCV</span>
+                <span class="lab-index">23</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Vehicle Detection</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Cascade-based detector locating cars in traffic imagery, tuned to hold down
+                false positives on cluttered backgrounds.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">OpenCV</span>
+                <span class="stack-tag">Object detection</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="cv" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">OpenCV</span>
+                <span class="lab-index">24</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Helmet Detection</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Safety-compliance detector identifying whether riders are wearing helmets — the
+                same cascade approach applied to a real monitoring use case.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">OpenCV</span>
+                <span class="stack-tag">Safety monitoring</span>
+              </div>
+            </article>
+
+            <article class="lab-card" data-category="cv" data-reveal>
+              <div class="flex items-start justify-between gap-4">
+                <span class="chip">OpenCV</span>
+                <span class="lab-index">25</span>
+              </div>
+              <h3 class="mt-5 font-display text-lg font-medium tracking-tight">Multi-Object Detection Pipeline</h3>
+              <p class="mt-2.5 flex-1 text-sm text-ink-muted">
+                Consolidated OpenCV pipeline running several cascade classifiers over the same
+                input and reporting detection accuracy per class.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-1.5">
+                <span class="stack-tag">OpenCV</span>
+                <span class="stack-tag">Pipeline</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           SECTION · EARLIER WEB & UI WORK
+           The pre-AI client sites. Kept because they are live, verifiable
+           proof of shipped work — and because a Gen AI developer who can
+           also build the interface is a rarer hire.
+           ════════════════════════════════════════════════════════════════ -->
+      <section class="relative py-24 sm:py-32">
+        <div class="shell">
+          <div class="flex flex-wrap items-end justify-between gap-8" data-reveal>
+            <div>
+              <p class="section-label">05 — Earlier work</p>
+              <h2 class="mt-6 max-w-[18ch] font-display text-section font-semibold">
+                Web &amp; UI
+                <span class="serif-accent text-gradient">foundation</span>
+              </h2>
+              <p class="mt-7 max-w-[54ch] text-lede text-ink-soft">
+                Client sites designed and built before moving into AI engineering. All still
+                live.
+              </p>
+            </div>
+            <a
+              href="https://www.linkedin.com/in/shiva-krishna-966661242"
+              target="_blank" rel="noopener"
+              class="group inline-flex items-center gap-2 text-sm text-ink-soft transition-colors hover:text-ink"
+            >
+              <span class="link-underline">More on LinkedIn</span>
+              <svg class="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group="90">
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #34d399; --hue-b: #22d3ee;">
+                <img src="/images/adept-tech-services.png" alt="Adept Technical Services homepage" width="1400" height="875" loading="lazy" decoding="async" class="tilt-media" />
+              </div>
+              <div class="tilt-layer relative p-5">
+                <h3 class="font-display text-lg font-medium tracking-tight">Adept Technical Services</h3>
+                <p class="mt-2 text-sm text-ink-muted">Corporate site for an IT services firm.</p>
+              </div>
+              <a href="https://adepttechservices.com/" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Visit Adept Technical Services"></a>
+            </article>
+
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #a855f7; --hue-b: #7c6bff;">
+                <img src="/images/neutronest.png" alt="NeutroNest homepage" width="1400" height="875" loading="lazy" decoding="async" class="tilt-media" />
+              </div>
+              <div class="tilt-layer relative p-5">
+                <h3 class="font-display text-lg font-medium tracking-tight">NeutroNest</h3>
+                <p class="mt-2 text-sm text-ink-muted">Tech-skills training and job-assistance platform.</p>
+              </div>
+              <a href="https://neutronest.com/" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Visit NeutroNest"></a>
+            </article>
+
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #22d3ee; --hue-b: #7c6bff;">
+                <img src="/images/on-demand-testing.png" alt="On-Demand Testing homepage" width="1400" height="875" loading="lazy" decoding="async" class="tilt-media" />
+              </div>
+              <div class="tilt-layer relative p-5">
+                <h3 class="font-display text-lg font-medium tracking-tight">On-Demand Testing</h3>
+                <p class="mt-2 text-sm text-ink-muted">Marketing site for a software QA service.</p>
+              </div>
+              <a href="https://on-demandtesting.com/" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Visit On-Demand Testing"></a>
+            </article>
+
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #3b82f6; --hue-b: #22d3ee;">
+                <img src="/images/appify.jpg" alt="Appi-fy homepage design" width="1400" height="875" loading="lazy" decoding="async" class="tilt-media" />
+              </div>
+              <div class="tilt-layer relative p-5">
+                <h3 class="font-display text-lg font-medium tracking-tight">Appi-fy</h3>
+                <p class="mt-2 text-sm text-ink-muted">E-commerce app-builder landing page, designed in Figma.</p>
+              </div>
+              <a href="https://www.figma.com/proto/K39eH0RwSy0pUj4hqtWLFp/Appi-fy-Website?page-id=0%3A1&node-id=258-5594&viewport=172%2C2887%2C0.2&t=J5yN4LliSWSWn2p5-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=258%3A5594" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Open the Appi-fy Figma prototype"></a>
+            </article>
+
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #f59e0b; --hue-b: #7c6bff;">
+                <img src="/images/insuraksha.png" alt="Insuraksha website" width="1400" height="875" loading="lazy" decoding="async" class="tilt-media" />
+              </div>
+              <div class="tilt-layer relative p-5">
+                <h3 class="font-display text-lg font-medium tracking-tight">Insuraksha</h3>
+                <p class="mt-2 text-sm text-ink-muted">Insurance platform for business and personal cover.</p>
+              </div>
+              <a href="https://insuraksha.com/" target="_blank" rel="noopener" class="absolute inset-0 z-10" aria-label="Visit Insuraksha"></a>
+            </article>
+
+            <article data-tilt data-cursor="hover" data-reveal class="tilt glass group relative overflow-hidden rounded-card p-2">
+              <div class="card-media aspect-[16/10] rounded-[1.1rem]" style="--hue-a: #22d3ee; --hue-b: #0ea5e9;">
+                <img src="/images/lifestyle-platform.png" alt="Lifestyle membership website design" width="1400" height="875" loading="lazy" decoding="async" class="tilt-media" />
+              </div>
+              <div class="tilt-layer relative p-5">
+                <h3 class="font-display text-lg font-medium tracking-tight">Lifestyle Membership</h3>
+                <p class="mt-2 text-sm text-ink-muted">Travel and lifestyle subscription site design.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           SECTION · CONTACT
+           ════════════════════════════════════════════════════════════════ -->
+      <section id="contact" class="relative scroll-mt-24 py-28 sm:py-40">
+        <div class="shell">
+          <div class="glass-strong relative overflow-hidden rounded-[2rem] px-7 py-16 sm:px-14 sm:py-24" data-reveal>
+            <div class="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+            <div class="pointer-events-none absolute -bottom-32 -right-16 h-80 w-80 rounded-full bg-accent-2/10 blur-3xl" aria-hidden="true"></div>
+
+            <div class="relative" data-reveal-group="90">
+              <p class="section-label" data-reveal>06 — Contact</p>
+
+              <h2 class="mt-6 max-w-[15ch] font-display text-section font-semibold" data-reveal>
+                Let's build
+                <span class="serif-accent text-gradient">something</span>
+              </h2>
+
+              <p class="mt-7 max-w-[52ch] text-lede text-ink-soft" data-reveal>
+                If you're hiring for agentic AI, RAG or applied Gen AI engineering, I'd like to
+                hear about it. Open to full-time roles, freelance and part-time work.
+              </p>
+
+              <div class="mt-11 flex flex-wrap items-center gap-4" data-reveal>
+                <a href="tel:+917995555083" data-magnetic class="btn btn-primary !px-8">
+                  <span data-magnetic-label>+91 79955 55083</span>
+                </a>
+                <a href="https://www.linkedin.com/in/shiva-krishna-966661242" target="_blank" rel="noopener" class="btn btn-ghost" data-magnetic>
+                  <span data-magnetic-label>LinkedIn</span>
+                </a>
+              </div>
+
+              <div class="rule my-12"></div>
+
+              <div class="flex flex-wrap items-center justify-between gap-8" data-reveal>
+                <div>
+                  <p class="section-label">Elsewhere</p>
+                  <div class="mt-4 flex flex-wrap gap-x-7 gap-y-3 text-sm text-ink-soft">
+                    <a href="https://www.linkedin.com/in/shiva-krishna-966661242" target="_blank" rel="noopener" class="link-underline transition-colors hover:text-ink">LinkedIn</a>
+                    <a href="/shiva-krishna-resume.pdf" target="_blank" rel="noopener" class="link-underline transition-colors hover:text-ink">Résumé</a>
+                    <a href="tel:+917995555083" class="link-underline transition-colors hover:text-ink">Phone</a>
+                  </div>
+                </div>
+
+                <div class="sm:text-right">
+                  <p class="section-label">Currently</p>
+                  <p class="mt-3 font-display text-xl tracking-tight">Gen AI Developer at Suzva</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-ink/10 py-10">
+      <div class="shell flex flex-wrap items-center justify-between gap-5 text-sm text-ink-muted">
+        <p>© <span data-year>2026</span> A. Shiva Krishna</p>
+        <a href="#top" class="group inline-flex items-center gap-2 transition-colors hover:text-ink">
+          Back to top
+          <svg class="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover:-translate-y-1" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 13V3m0 0L4 7m4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>

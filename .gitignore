@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# Local tooling and source documents (not part of the site)
+.claude
+*.docx
+~$*
+.vercel
